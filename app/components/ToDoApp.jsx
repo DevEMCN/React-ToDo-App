@@ -4,6 +4,7 @@ var AddToDo = require('AddToDo');
 var ToDoSearch = require('ToDoSearch');
 var uuid = require('node-uuid');
 var ToDoAPI = require('ToDoAPI');
+var moment = require('moment');
 
 var ToDoApp = React.createClass({
   getInitialState: function(){
@@ -24,7 +25,9 @@ var ToDoApp = React.createClass({
           {
             id: uuid(),
             text: text,
-            completed: false
+            completed: false,
+            createdAt: moment().unix(),
+            completedAt: undefined
           }
       ]
     });
@@ -35,6 +38,7 @@ var ToDoApp = React.createClass({
       if(todo.id === id)
       {
         todo.completed = !todo.completed; // set to opposite
+        todo.completedAt = todo.completed ? moment().unix() : undefined;
       }
       return todo;
     });
